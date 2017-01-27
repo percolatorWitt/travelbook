@@ -18,9 +18,7 @@
     var locations = [
             {loop $locations}
                 ["{$text}", {$lat}, {$lon}],
-            {/loop}
-          
-            
+            {/loop}  
     ];
     
 </script>
@@ -115,7 +113,11 @@ label{
                     <div id="basicMap"></div>
                     <div id="addedlocations">
                         <h3>Added locations</h3>
-                        <ul id="addedlocationslist"></ul>
+                        <ul id="addedlocationslist">
+                            {loop $locations}
+                            <li id="place_{$id}" class="addlocationsEntry ui-sortable-handle"><span>{$text}</span><input name="places[place_id{$id}]" value="[{ &quot;lat&quot;: &quot;{$lat}&quot;, &quot;lon&quot;: &quot;{$lon}&quot;, &quot;text&quot;: &quot;Berlin, Deutschland&quot; }]" type="hidden"><span id="{$id}" class="delete" title="delete" onclick="remove('place_{$id}');"></span></li>
+                            {/loop}
+                        </ul>
                     </div>
                 </div>
                 <div class="clear"></div>

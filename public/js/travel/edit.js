@@ -50,8 +50,27 @@ function submitform(address) {
     });
 }
 
+//add saved locations
+function initialAddedLocations(){
+    var lists = $("#addedlocationslist li");
+
+    var listcount = lists.length;
+
+    if(listcount > 0){
+        //dragable
+        $( "#addedlocationslist" ).sortable({
+          placeholder: "addlocationsEntry"
+        });
+        $( "#addedlocationslist" ).disableSelection();
+        
+        $("#basicMap").css("width", "60%");
+        //$("#addedlocations").css("display", "block");
+        $("#addedlocations").fadeIn(1000, "linear");
+    }
+}
+
 $(function() {
-    //$('form').unbind('submit');
+    initialAddedLocations();
     $('form').submit(function(event){event.preventDefault();});
     //upload
     // Auf neue Auswahl reagieren und gegebenenfalls Funktion dateiauswahl neu ausführen.
