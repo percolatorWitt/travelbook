@@ -1,0 +1,8 @@
+RewriteEngine On
+# if a directory or a file exists, use it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteCond %{REQUEST_URI} !-l
+RewriteCond %{REQUEST_FILENAME} !\.(ico|css|png|jpg|gif|js)$ [NC]
+# otherwise forward it to index.php
+RewriteRule . index.php

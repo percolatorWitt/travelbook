@@ -1,0 +1,17 @@
+/* standard elements */
+
+body{
+    margin: 0;
+    background-color: #007fff;
+}
+
+/* general */
+
+
+#contentoutside{
+    width: 100%;
+}
+
+input[type="submit"]:hover{
+    cursor: pointer;
+}
