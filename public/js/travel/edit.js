@@ -66,6 +66,15 @@ function initialAddedLocations(){
         $("#basicMap").css("width", "60%");
         //$("#addedlocations").css("display", "block");
         $("#addedlocations").fadeIn(1000, "linear");
+        
+        //move position of map to entry
+        $(".addlocationsEntry").click(function(){
+            var id = this.id;
+            var val = $("#"+id+" input").val();
+            var obj = JSON.parse(val);
+
+            setView(obj[0].lat, obj[0].lon);
+        });
     }
 }
 
@@ -167,7 +176,7 @@ function showInMap(lonString, latString, displayName, place_id){
     $("#suche").val("");
     $("#selectLocation li").remove();
     
-    
+    //move position of map to entry
     $(".addlocationsEntry").click(function(){
         var id = this.id;
         var val = $("#"+id+" input").val();
