@@ -31,7 +31,6 @@ function init(){
     }
 }
 
-
 /*
  * Wenn man ein Datum, von, bis, einträgt, dann soll unter dem Ort eine Checkbox rein,
  * dass man eintragen kann, ob man dann da war
@@ -94,7 +93,6 @@ $(function() {
     $( "#enddate" ).datepicker();
     
     
-    
     init();
     //myNewLayer(test);
     $(".olPopup").css("display", "none");
@@ -148,7 +146,6 @@ function displaySearch(obj){
             break;
         }
         $("#basicMap").css("width", "60%");
-        //$("#addedlocations").css("display", "block");
         $("#addedlocations").fadeIn(1000, "linear");
         //Ausgabe in Ergebnisliste
         $("#selectLocation").append('<li class=\"'+obj[i].type+'\" onclick=\"showInMap('+obj[i].lon+', '+obj[i].lat+', \''+obj[i].display_name+'\', '+obj[i].place_id+');\">'+obj[i].display_name+'</li>');
@@ -246,4 +243,3 @@ function dateiauswahl(evt) {
     reader.readAsDataURL(f);
   }
 }
-  
