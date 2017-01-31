@@ -26,7 +26,11 @@
 <!-- eigene Skripte -->
 <script type="text/javascript" src="/public/js/travel/edit.js"></script>
 
-<style>
+<style type="text/css">
+#accordion{
+    padding-bottom: 1em;
+}    
+    
 #form-container {
   width: 100%;
 }
@@ -83,12 +87,27 @@ label{
     width: 70px;
     display: inline-block;
 }
+#travelsave-top,
+#travelsave-bottom{
+    background-color: #F00;
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    line-height: 1.3;
+    margin-left: 0;
+    padding: 5px;
+}
+
+#travelsave-top:hover,
+#travelsave-bottom:hover{
+    cursor: pointer;
+}
 </style>
 
 <h1>Add Travel</h1>
 
 <form method="get" action="/travel/add">
-    <button class="btn btn-primary" type="submit">Save it.</button>
+    <button id="travelsave-top"class="btn btn-primary" type="submit">Save it.</button>
     <div id="accordion">
         <h3>Whats your travelname und when you traveled? Where were you are?</h3>
         <div>
@@ -164,6 +183,7 @@ label{
             </div>
         </div>
     </div>
+    <button id="travelsave-bottom" class="btn btn-primary" type="submit">Save it.</button>
 </form>
 <script>
 <!-- Initialize Quill editor -->
@@ -192,7 +212,7 @@ form.onsubmit = function() {
   //submit
    $.ajax({
     type: "POST",
-    url: "/travel/addajax/",
+    url: "/travel/editajax/{travel_id}",
     data: $(form).serialize(),
     success: console.log("juhu")
     });

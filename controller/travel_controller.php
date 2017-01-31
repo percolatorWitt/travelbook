@@ -160,6 +160,11 @@ class travel_controller extends database{
        
     }
     
+    public function editajax($travel_id){
+            
+    }
+
+    
     //nur Besitzer
     //nur nach Best�tigung
     public function delete($id){
