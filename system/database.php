@@ -1,5 +1,5 @@
 <?php
-include_once('./configuration.php');
+include_once('./system/configuration.php');
 
 class database{
     private $db;

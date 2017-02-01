@@ -1,4 +1,6 @@
-<!-- grundsaetzliches -->
+<?php
+/* template head */
+/* end template head */ ob_start(); /* template body */ ?><!-- grundsaetzliches -->
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 
 <!-- karten -->
@@ -16,9 +18,22 @@
 
 <script type="text/javascript">
     var locations = [
-            {loop $locations}
-                ["{$text}", {$lat}, {$lon}],
-            {/loop}  
+            <?php 
+$_loop0_data = (isset($this->scope["locations"]) ? $this->scope["locations"] : null);
+if ($this->isTraversable($_loop0_data) == true)
+{
+	foreach ($_loop0_data as $tmp_key => $this->scope["-loop-"])
+	{
+		$_loop0_scope = $this->setScope(array("-loop-"));
+/* -- loop start output */
+?>
+                ["<?php echo $this->scope["text"];?>", <?php echo $this->scope["lat"];?>, <?php echo $this->scope["lon"];?>],
+            <?php 
+/* -- loop end output */
+		$this->setScope($_loop0_scope, true);
+	}
+}
+?>  
     ];
     
 </script>
@@ -112,7 +127,7 @@ label{
         <h3>Whats your travelname und when you traveled? Where were you are?</h3>
         <div>
             <label for="name">Name</label>
-            <input id="name" name="name" type="input" placeholder="Name of your travel." value="{$name}"/>
+            <input id="name" name="name" type="input" placeholder="Name of your travel." value="<?php echo $this->scope["name"];?>"/>
 
             <p>
                 <div id="divstartdate" class="floatleft">
@@ -133,9 +148,23 @@ label{
                     <div id="addedlocations">
                         <h3>Added locations</h3>
                         <ul id="addedlocationslist">
-                            {loop $locations}
-                            <li id="place_{$id}" class="addlocationsEntry ui-sortable-handle"><span>{$text}</span><input name="places[place_id{$id}]" value="[{ &quot;lat&quot;: &quot;{$lat}&quot;, &quot;lon&quot;: &quot;{$lon}&quot;, &quot;text&quot;: &quot;Berlin, Deutschland&quot; }]" type="hidden"><span id="{$id}" class="delete" title="delete" onclick="remove('place_{$id}');"></span></li>
-                            {/loop}
+                            <?php 
+$_loop1_data = (isset($this->scope["locations"]) ? $this->scope["locations"] : null);
+if ($this->isTraversable($_loop1_data) == true)
+{
+	foreach ($_loop1_data as $tmp_key => $this->scope["-loop-"])
+	{
+		$_loop1_scope = $this->setScope(array("-loop-"));
+/* -- loop start output */
+?>
+                            <li id="place_<?php echo $this->scope["id"];?>" class="addlocationsEntry ui-sortable-handle"><span><?php echo $this->scope["text"];?></span><input name="places[place_id<?php echo $this->scope["id"];?>]" value="[{ &quot;lat&quot;: &quot;<?php echo $this->scope["lat"];?>&quot;, &quot;lon&quot;: &quot;<?php echo $this->scope["lon"];?>&quot;, &quot;text&quot;: &quot;Berlin, Deutschland&quot; }]" type="hidden"><span id="<?php echo $this->scope["id"];?>" class="delete" title="delete" onclick="remove('place_<?php echo $this->scope["id"];?>');"></span></li>
+                            <?php 
+/* -- loop end output */
+		$this->setScope($_loop1_scope, true);
+	}
+}
+?>
+
                         </ul>
                     </div>
                 </div>
@@ -161,7 +190,7 @@ label{
                         <!--<label for="about">About me</label>-->
                     <input name="about" type="hidden"/>
                     <div id="editor-container">
-                    <p>{$description}</p>
+                    <p><?php echo $this->scope["description"];?></p>
                   </div>
                 </div>
                 <div class="row">
@@ -212,7 +241,7 @@ form.onsubmit = function() {
   //submit
    $.ajax({
     type: "POST",
-    url: "/travel/editajax/{$travel_id}",
+    url: "/travel/editajax/<?php echo $this->scope["travel_id"];?>",
     data: $(form).serialize(),
     success: console.log("juhu")
     });
@@ -224,4 +253,6 @@ form.onsubmit = function() {
   //return false;
 };
 
-</script>
+</script><?php  /* end template body */
+return $this->buffer . ob_get_clean();
+?>

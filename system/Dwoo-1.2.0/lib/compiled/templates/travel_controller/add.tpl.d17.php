@@ -1,4 +1,6 @@
-<!-- grundsaetzliches -->
+<?php
+/* template head */
+/* end template head */ ob_start(); /* template body */ ?><!-- grundsaetzliches -->
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 
 <!-- karten -->
@@ -14,23 +16,89 @@
 <link href="https://cdn.quilljs.com/1.1.3/quill.snow.css" rel="stylesheet"/>
 <script src="https://cdn.quilljs.com/1.1.3/quill.js"></script>
 
-<script type="text/javascript">
-    var locations = [
-            {loop $locations}
-                ["{$text}", {$lat}, {$lon}],
-            {/loop}  
-    ];
-    
-</script>
-
 <!-- eigene Skripte -->
-<script type="text/javascript" src="/public/js/travel/edit.js"></script>
+<script type="text/javascript" src="/public/js/add.js"></script>
 
 <style type="text/css">
-#accordion{
+#divstartdate{
+    margin-right: 1em;
+}
+#addlocations{
+    padding-top: 1em;
     padding-bottom: 1em;
-}    
-    
+    width: 100%
+}
+#basicMap {
+    border: 5px solid #324290;
+    width: 100%;
+    /*width: 60%;*/
+    height: 350px;
+    margin: 0 6px 0 0;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    position: relative;
+    top: 0px;
+    float: left;
+}
+#addedlocations{
+    background-color: #ffffff;
+    border: 5px solid #324290;
+    border-radius: 3px;
+    width: 38%;
+    margin-left: 60%;
+    min-height: 350px;
+    padding: 3px;
+    display: none;
+}
+#addedlocations ul{
+    padding: 0;
+}
+#addedlocations li{
+    background-color: #ABB9FC;
+    cursor: pointer;
+    list-style: none;
+    margin-bottom: 2px;
+    padding-bottom: 0.2em;
+    padding-left: 1em;
+    padding-top: 0.2em;
+}
+.addlocationsEntry:hover {
+    font-weight: bold;
+}
+#selectLocation{
+    padding-left:1em;
+}
+#selectLocation li{
+    cursor: pointer;
+    list-style: none;
+}
+#selectLocation li:hover {
+    background-color: grey;
+}
+
+
+.clear{
+    clear: both;
+}
+.floatleft{
+    float: left;
+}
+.delete {
+    display: block;
+    float: right;
+    height: 20px;
+    width: 27px;
+    background-image: url("/public/img/multiply-1.svg");
+    background-repeat: no-repeat;
+    background-position: right bottom;
+}
+.delete:hover {
+    background-image: url("/public/img/multiply-1_gray.svg");
+}
+
+</style>
+
+<style type="text/css">
 #form-container {
   width: 100%;
 }
@@ -112,7 +180,7 @@ label{
         <h3>Whats your travelname und when you traveled? Where were you are?</h3>
         <div>
             <label for="name">Name</label>
-            <input id="name" name="name" type="input" placeholder="Name of your travel." value="{$name}"/>
+            <input id="name" name="name" type="input" placeholder="Name of your travel."/>
 
             <p>
                 <div id="divstartdate" class="floatleft">
@@ -132,11 +200,7 @@ label{
                     <div id="basicMap"></div>
                     <div id="addedlocations">
                         <h3>Added locations</h3>
-                        <ul id="addedlocationslist">
-                            {loop $locations}
-                            <li id="place_{$id}" class="addlocationsEntry ui-sortable-handle"><span>{$text}</span><input name="places[place_id{$id}]" value="[{ &quot;lat&quot;: &quot;{$lat}&quot;, &quot;lon&quot;: &quot;{$lon}&quot;, &quot;text&quot;: &quot;Berlin, Deutschland&quot; }]" type="hidden"><span id="{$id}" class="delete" title="delete" onclick="remove('place_{$id}');"></span></li>
-                            {/loop}
-                        </ul>
+                        <ul id="addedlocationslist"></ul>
                     </div>
                 </div>
                 <div class="clear"></div>
@@ -161,7 +225,7 @@ label{
                         <!--<label for="about">About me</label>-->
                     <input name="about" type="hidden"/>
                     <div id="editor-container">
-                    <p>{$description}</p>
+                    <p></p>
                   </div>
                 </div>
                 <div class="row">
@@ -183,8 +247,8 @@ label{
             </div>
         </div>
     </div>
-    <button id="travelsave-bottom" class="btn btn-primary" type="submit">Save it.</button>
 </form>
+<button id="travelsave-bottom" class="btn btn-primary" type="submit">Save it.</button>
 <script>
 <!-- Initialize Quill editor -->
 var quill = new Quill('#editor-container', {
@@ -212,16 +276,23 @@ form.onsubmit = function() {
   //submit
    $.ajax({
     type: "POST",
-    url: "/travel/editajax/{$travel_id}",
+    url: "/travel/addajax/",
     data: $(form).serialize(),
-    success: console.log("juhu")
+    success: function(result){
+        //console.log(result);
+        window.location.href = "/travel/edit/"+result;
+    }
     });
   
   //endsubmi
   
-   // No back end to actually submit to!
+  
+  
+  // No back end to actually submit to!
   //alert('Open the console to see the submit data!')
   //return false;
 };
 
-</script>
+</script><?php  /* end template body */
+return $this->buffer . ob_get_clean();
+?>

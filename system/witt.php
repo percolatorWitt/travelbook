@@ -202,7 +202,7 @@ class Witt{
     
     public function getOutput(){
         // Outputs the result ...
-        $this->dwoo->output($this->dwooTemplate, $this->dwooData);
+        $this->dwoo->output($this->dwooTemplate, $this->dwooData);echo "hallo4";exit;
         // ... or get it to use it somewhere else
         $this->dwoo->get($this->dwooTemplate, $this->dwooData);
     }

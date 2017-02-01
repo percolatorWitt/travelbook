@@ -131,16 +131,18 @@ class travel_controller extends database{
                 1 => array('name' => 'travel_id', 'value' => $travel_id, 'param' => "PARAM_INT")
             ));
         
-        $locations = json_decode($result[0]['locations'], TRUE);
         $newLocations = array();
-        
-        foreach($locations as $key => $location){
-            $newLocations[] = array(
-                    "lat" => $location["lat"], 
-                    "lon" => $location["lon"], 
-                    "text" => $location["text"],
-                    "id" => $key
-            );
+        if( ($result[0]['locations'] != "0") && (!empty($result[0]['locations'])) ){
+            $locations = json_decode($result[0]['locations'], TRUE);
+            
+            foreach($locations as $key => $location){
+                $newLocations[] = array(
+                        "lat" => $location["lat"], 
+                        "lon" => $location["lon"], 
+                        "text" => $location["text"],
+                        "id" => $key
+                );
+            }
         }
         
         $this->viewVariables = array(
@@ -153,7 +155,7 @@ class travel_controller extends database{
          
         
 //echo "<pre>";
-    //var_dump($newLocations); 
+    
          //exit;
         //var_dump($result[0]['locations']);
          
