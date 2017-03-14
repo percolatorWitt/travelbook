@@ -60,7 +60,7 @@ $(function() {
     $('form').submit(function(event){event.preventDefault();});
     //upload
     // Auf neue Auswahl reagieren und gegebenenfalls Funktion dateiauswahl neu ausführen.
-    document.getElementById('files').addEventListener('change', dateiauswahl, false);
+    //document.getElementById('files').addEventListener('change', dateiauswahl, false);
     
     $( "#accordion" ).accordion({
       heightStyle: "content"

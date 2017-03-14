@@ -175,6 +175,7 @@ label{
 <form method="get" action="/travel/add">
     <button id="travelsave-top"class="btn btn-primary" type="submit">Save it.</button>
     <div id="accordion">
+        
         <h3>Whats your travelname und when you traveled? Where were you are?</h3>
         <div>
             <label for="name">Name</label>
@@ -213,11 +214,10 @@ label{
                 </div>
             </div>
         </div>
+        
         <h3>Write something.</h3>
         <div>
-
             <div id="form-container" class="container">
-
 
                 <div class="row form-group">
                         <!--<label for="about">About me</label>-->
@@ -232,17 +232,10 @@ label{
 
             </div>
         </div>
+        
         <h3>Show your photos.</h3>
         <div>
-            <p>Wählen Sie Dateien aus. Von Bildern werden Vorschaubilder erzeugt.</p>
-            <div id="fileupload">
-                <div id="fileuploadcontrol">
-                    <input type="file" id="files" name="files[]" multiple />
-                </div>
-                <div id="fileuploadlist">
-                    <output id="list"></output>
-                </div>
-            </div>
+            <p>Please save your trip first.</p>
         </div>
     </div>
 </form>

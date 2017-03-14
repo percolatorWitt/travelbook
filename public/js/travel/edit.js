@@ -79,10 +79,10 @@ function initialAddedLocations(){
 
 $(function() {
     initialAddedLocations();
-    $('form').submit(function(event){event.preventDefault();});
+    //$('form').submit(function(event){event.preventDefault();});
     //upload
     // Auf neue Auswahl reagieren und gegebenenfalls Funktion dateiauswahl neu ausführen.
-    document.getElementById('files').addEventListener('change', dateiauswahl, false);
+    //document.getElementById('files').addEventListener('change', dateiauswahl, false);
     
     $( "#accordion" ).accordion({
       heightStyle: "content"
@@ -235,7 +235,13 @@ function dateiauswahl(evt) {
         vorschau.className = 'vorschau';
         vorschau.src   = e.target.result;
         vorschau.title = theFile.name;
-        document.getElementById('list').insertBefore(vorschau, null);
+        //document.getElementById('list').insertBefore(vorschau, null);
+        
+        var file = document.createElement('input');
+        file.type = 'file';
+        file.name = 'file';
+        file.value = e.target.result;
+        document.getElementById('list').insertBefore(file, null);
       };
     })(f);
 
