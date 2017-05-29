@@ -44,84 +44,6 @@ if ($this->isTraversable($_loop0_data) == true)
 <!-- eigene Skripte -->
 <script type="text/javascript" src="/public/js/travel/edit.js"></script>
 
-<style type="text/css">
-#accordion{
-    padding-bottom: 1em;
-}    
-    
-#form-container {
-  width: 100%;
-}
-
-.row {
-  margin-top: 15px;
-}
-.row.form-group {
-  padding-left: 15px;
-  padding-right: 15px;
-}
-.btn {
-  margin-left: 15px;
-}
-
-.change-link {
-  background-color: #000;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
-  bottom: 0;
-  color: #fff;
-  opacity: 0.8;
-  padding: 4px;
-  position: absolute;
-  text-align: center;
-  width: 150px;
-}
-.change-link:hover {
-  color: #fff;
-  text-decoration: none;
-}
-
-img {
-  width: 150px;
-}
-
-#editor-container {
-  height: 130px;
-}
-#fileuploadcontrol{
-    float: left;
-    height: 80%;
-}
-#fileuploadlist{
- 
-}
-
-#fileuploadlist img{
-    width: 150px;
-    float: left;
-    margin: 5px;
-}
-label{
-    width: 70px;
-    display: inline-block;
-}
-#travelsave-top,
-#travelsave-bottom{
-    background-color: #F00;
-    color: #fff;
-    font-size: 1em;
-    font-weight: bold;
-    line-height: 1.3;
-    margin-left: 0;
-    padding: 5px;
-}
-
-#travelsave-top:hover,
-#travelsave-bottom:hover{
-    cursor: pointer;
-}
-</style>
-
 <h1>Edit Travel</h1>
 
 <form id="editform" action="/travel/editajax/<?php echo $this->scope["travel_id"];?>" method="post" enctype="multipart/form-data">
@@ -145,14 +67,12 @@ label{
             </p>
             <div class="clear"></div>
 
-            <!--<form method="get" action="/user/add/">-->
-
-                <div id="addlocations">
-                    <div id="basicMap"></div>
-                    <div id="addedlocations">
-                        <h3>Added locations</h3>
-                        <ul id="addedlocationslist">
-                            <?php 
+            <div id="addlocations">
+                <div id="basicMap"></div>
+                <div id="addedlocations">
+                    <h3>Added locations</h3>
+                    <ul id="addedlocationslist">
+                        <?php 
 $_loop1_data = (isset($this->scope["locations"]) ? $this->scope["locations"] : null);
 if ($this->isTraversable($_loop1_data) == true)
 {
@@ -161,24 +81,22 @@ if ($this->isTraversable($_loop1_data) == true)
 		$_loop1_scope = $this->setScope(array("-loop-"));
 /* -- loop start output */
 ?>
-                            <li id="place_<?php echo $this->scope["id"];?>" class="addlocationsEntry ui-sortable-handle">
-                                <span><?php echo $this->scope["text"];?></span>
-                                <input name="places[place_id<?php echo $this->scope["id"];?>]" value="[{ &quot;lat&quot;: &quot;<?php echo $this->scope["lat"];?>&quot;, &quot;lon&quot;: &quot;<?php echo $this->scope["lon"];?>&quot;, &quot;text&quot;: &quot;Berlin, Deutschland&quot; }]" type="hidden">
-                                <span id="<?php echo $this->scope["id"];?>" class="delete" title="delete" onclick="remove('place_<?php echo $this->scope["id"];?>');"></span>
-                            </li>
-                            <?php 
+                        <li id="place_<?php echo $this->scope["id"];?>" class="addlocationsEntry ui-sortable-handle">
+                            <span><?php echo $this->scope["text"];?></span>
+                            <input name="places[place_id<?php echo $this->scope["id"];?>]" value="[{ &quot;lat&quot;: &quot;<?php echo $this->scope["lat"];?>&quot;, &quot;lon&quot;: &quot;<?php echo $this->scope["lon"];?>&quot;, &quot;text&quot;: &quot;Berlin, Deutschland&quot; }]" type="hidden">
+                            <span id="<?php echo $this->scope["id"];?>" class="delete" title="delete" onclick="remove('place_<?php echo $this->scope["id"];?>');"></span>
+                        </li>
+                        <?php 
 /* -- loop end output */
 		$this->setScope($_loop1_scope, true);
 	}
 }
 ?>
 
-                        </ul>
-                    </div>
+                    </ul>
                 </div>
-                <div class="clear"></div>
-
-            <!--</form>-->
+            </div>
+            <div class="clear"></div>
 
             <br/>
             <div id="searchlocation">
@@ -357,20 +275,7 @@ $(document).ready(function() {
         var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
         return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
     }
-}); 
-
-</script>
-<div id="upload-wrapper">
-<div align="center">
-<h3>Ajax File Uploader</h3>
-<form action="/travel/editajax/<?php echo $this->scope["travel_id"];?>" method="post" enctype="multipart/form-data" id="MyUploadForm">
-    <input name="FileInput" id="FileInput" type="file" />
-    <input type="submit"  id="submit-btn" value="Upload" />
-    <img src="images/ajax-loader.gif" id="loading-img" style="display:none;" alt="Please Wait"/>
-</form>
-<div id="progressbox" ><div id="progressbar"></div ><div id="statustxt">0%</div></div>
-<div id="output"></div>
-</div>
-</div><?php  /* end template body */
+});
+</script><?php  /* end template body */
 return $this->buffer . ob_get_clean();
 ?>

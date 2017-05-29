@@ -142,7 +142,7 @@ class travel_controller extends database{
         $postVar = $_POST;
         echo "editajax";
         
-        $postdata = $this->prepareTravelPostData();
+        $postdata = $this->prepareTravelPostData($user_id);
         
         $sql = "UPDATE travel SET name = :name, description = :description, locations = :locations, startdate = :startdate"
                 . ", enddate = :enddate "
@@ -159,8 +159,8 @@ class travel_controller extends database{
             ));
         
             
-            var_dump($_FILES);
-            var_dump($_POST);
+            //var_dump($_FILES);
+            //var_dump($_POST);
     }
 
     
@@ -176,7 +176,7 @@ class travel_controller extends database{
      * 
      * @return array
      */
-    private function prepareTravelPostData(){
+    private function prepareTravelPostData($user_id){
         $postVar = $_POST;
         
         $postData = array();
@@ -221,6 +221,23 @@ class travel_controller extends database{
         $endDateTemp = preg_split('/\//', $postVar['enddate']);
         $postData['enddate'] = $endDateTemp[2].'-'.$endDateTemp[0].'-'.$endDateTemp[1];
         
+        //Save files only, if files uploaded
+        if(!empty($_FILES)){
+            echo "files";
+            $file = $this->uploadPictures();
+            
+            //wie in DB ablegen?
+                //1 Feld mit xml, dass Pfade enthält
+                //csv list?
+            //$postData['files'] = $file;
+            
+        }else{
+            echo "no Upload";
+        }
+        //var_dump($file);
+        
+        //delete files, if delete post for images came
+        
         return $postData;
     }
     
@@ -244,12 +261,15 @@ class travel_controller extends database{
      * @todo read exif-Data
      */
     private function uploadPictures(){
-        if(isset($_FILES["FileInput"]) && $_FILES["FileInput"]["error"]== UPLOAD_ERR_OK){
-            ############ Edit settings ##############
-            $UploadDirectory	= '../../uploads/'; //specify upload directory ends with / (slash)
-            ##########################################
-
+        $user_id = Witt::getUser();
+        
+        if(isset($_FILES["FileInput"]) &&  
+                    ($_FILES["FileInput"]["error"] == UPLOAD_ERR_OK || $_FILES["FileInput"]["error"] == 0)){
             
+            ############ Edit settings ##############
+            $UploadDirectory = './uploads/'.$user_id.'/'; //specify upload directory ends with / (slash)
+            ##########################################
+            echo "OK";
             
             /*
             Note : You will run into errors or blank page if "memory_limit" or "upload_max_filesize" is set to low in "php.ini". 
@@ -259,49 +279,78 @@ class travel_controller extends database{
 
             //check if this is an ajax request
             if (!isset($_SERVER['HTTP_X_REQUESTED_WITH'])){
+                echo "DIE";
                     die();
             }
 
-
+            /**
+             * Security - begin
+             */
             //Is file size is less than allowed size.
             if ($_FILES["FileInput"]["size"] > 5242880) {
                     die("File size is too big!");
             }
 
             //allowed file type Server side check
-            switch(strtolower($_FILES['FileInput']['type']))
-                    {
-                            //allowed file types
+            switch(strtolower($_FILES['FileInput']['type'])){
+                //allowed file types
                 case 'image/png': 
-                            case 'image/gif': 
-                            case 'image/jpeg': 
-                            case 'image/pjpeg':
-                            case 'text/plain':
-                            case 'text/html': //html file
-                            case 'application/x-zip-compressed':
-                            case 'application/pdf':
-                            case 'application/msword':
-                            case 'application/vnd.ms-excel':
-                            case 'video/mp4':
-                                    break;
-                            default:
-                                    die('Unsupported File!'); //output error
+                case 'image/gif':
+                case 'image/jpeg':
+                case 'image/jpg':
+                case 'image/pjpeg':
+                    break;
+                default:
+                    die('Unsupported File!'); //output error
             }
+            
+            /**
+             * Security - end
+             */
 
             $File_Name          = strtolower($_FILES['FileInput']['name']);
             $File_Ext           = substr($File_Name, strrpos($File_Name, '.')); //get file extention
             $Random_Number      = rand(0, 9999999999); //Random number to be added to name.
-            $NewFileName 		= $Random_Number.$File_Ext; //new file name
+            $NewFileName        = $Random_Number.$File_Ext; //new file name
+            
+            //check user upload folder
+            $this->createUserDir($user_id);
 
-            if(move_uploaded_file($_FILES['FileInput']['tmp_name'], $UploadDirectory.$NewFileName ))
-               {
-                    die('Success! File Uploaded.');
+            //move file
+            $md5Filename = md5_file($_FILES['FileInput']['tmp_name']);
+            if(move_uploaded_file($_FILES['FileInput']['tmp_name'], $UploadDirectory.$md5Filename.$NewFileName )){
+                $filename = $md5Filename.$NewFileName;
+                
+                return $filename;
             }else{
-                    die('error uploading File!');
+                
+                die('error uploading File!');
             }
 
         } else {
-                die('Something wrong with upload! Is "upload_max_filesize" set correctly?');
+            die('Something wrong with upload! Is "upload_max_filesize" set correctly?');
+        }
+    }
+    
+    /**
+     * check is user uplaod folder exists and create it if not
+     * 
+     * @param type $user_id
+     * @return boolean
+     */
+    private function createUserDir($user_id){
+        $UploadDirectory = './uploads/' . $user_id;
+
+        if( is_dir($UploadDirectory) ){
+
+            return TRUE;
+        }else{
+            if( mkdir($UploadDirectory, 0776) ){
+
+                return TRUE;
+            }else{
+                die('Problems to create user upload folder');
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 <?php
-include_once('./system/configuration.php');
+
 
 class database{
     private $db;
@@ -11,6 +11,7 @@ class database{
 
     public function __construct(){
         
+        include_once('./system/configuration.php');        
         
         $this->host = $config['host'];
         $this->dbname = $config['dbname'];
