@@ -100,6 +100,11 @@
         <h3>Show your photos.</h3>
         <div>
             <p>Wählen Sie Dateien aus. Von Bildern werden Vorschaubilder erzeugt.</p>
+            <div id="pictures">
+                {loop $pictures}
+                <img src="{$filename}" alt="picture" />
+                {/loop}
+            </div>
             <div id="fileupload">
                 <input name="FileInput" id="FileInput" type="file" />
                 <input type="submit"  id="submit-btn" value="Upload" />

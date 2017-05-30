@@ -119,6 +119,8 @@ class travel_controller extends database{
             }
         }
         
+        $pictures = $this->getPictures($travel_id);
+        
         $this->viewVariables = array(
             'travel_id' => $result[0]['travel_id'],
             'user_id' => $result[0]['user_id'],
@@ -127,16 +129,14 @@ class travel_controller extends database{
             'locations' => $newLocations,
             'startdate' => $this->prepareTravelDate($result[0]['startdate']),
             'enddate' => $this->prepareTravelDate($result[0]['enddate']),
+            'pictures' => $pictures
         );
          
         
-//echo "<pre>";
-    
-         //exit;
-        //var_dump($result[0]['locations']);
-         
        
     }
+    
+    
     //@todo Speichern nur, wenn Refferer Edit ist
     public function editajax($travel_id){
         $user_id = Witt::getUser();
@@ -214,6 +214,29 @@ class travel_controller extends database{
         
     }
     
+    private function getPictures($travelId){
+         $userId = Witt::getUser();
+        
+        //1 Bilddaten holen
+        $sql = "SELECT user_id, travel_id, pictures FROM travel WHERE user_id = :user_id and travel_id = :travel_id LIMIT 1";
+        
+        $pictures = $this->getStatement($sql, array(
+                0 => array('name' => 'user_id', 'value' => $userId, 'param' => "PARAM_INT"),
+                1 => array('name' => 'travel_id', 'value' => $travelId, 'param' => "PARAM_INT")
+            ));
+        
+        $pictures = json_decode($pictures[0]["pictures"], TRUE);
+        
+        $picturesPrepaired = array();
+        
+        foreach($pictures as $key => $row){
+            $picturesPrepaired[$key]['filename'] = ltrim($row['filename'], ".");
+        }
+        
+        return $picturesPrepaired;
+    }
+
+
     /**
      * 
      * @return array

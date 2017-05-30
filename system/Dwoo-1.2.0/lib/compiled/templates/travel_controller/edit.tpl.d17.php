@@ -129,6 +129,25 @@ if ($this->isTraversable($_loop1_data) == true)
         <h3>Show your photos.</h3>
         <div>
             <p>Wählen Sie Dateien aus. Von Bildern werden Vorschaubilder erzeugt.</p>
+            <div id="pictures">
+                <?php 
+$_loop2_data = (isset($this->scope["pictures"]) ? $this->scope["pictures"] : null);
+if ($this->isTraversable($_loop2_data) == true)
+{
+	foreach ($_loop2_data as $tmp_key => $this->scope["-loop-"])
+	{
+		$_loop2_scope = $this->setScope(array("-loop-"));
+/* -- loop start output */
+?>
+                <img src="<?php echo $this->scope["filename"];?>" alt="picture" />
+                <?php 
+/* -- loop end output */
+		$this->setScope($_loop2_scope, true);
+	}
+}
+?>
+
+            </div>
             <div id="fileupload">
                 <input name="FileInput" id="FileInput" type="file" />
                 <input type="submit"  id="submit-btn" value="Upload" />
