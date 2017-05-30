@@ -1,6 +1,7 @@
 <?php
 class travel_controller extends database{
     public $viewVariables = array();
+    private $travelId = FALSE;
     
     public function __construct($function, $param){
         $this->$function($param);
@@ -140,7 +141,8 @@ class travel_controller extends database{
     public function editajax($travel_id){
         $user_id = Witt::getUser();
         $postVar = $_POST;
-        echo "editajax";
+        
+        $this->travelId = $travel_id;
         
         $postdata = $this->prepareTravelPostData($user_id);
         
@@ -170,6 +172,46 @@ class travel_controller extends database{
         //DB-Eintrag löschen
         //alle Bilder löschen
     
+    }
+    
+    /**
+     * saves the uploaded pictues in the database
+     * @param type $pictures
+     */
+    private function setPictures($pictures){
+        $userId = Witt::getUser();
+        
+        //1 Bilddaten holen
+        $sql = "SELECT * FROM travel WHERE user_id = :user_id and travel_id = :travel_id LIMIT 1";
+        //provozierte Fehler --> abfangen
+            //$sql = "SELECT * FROM travels WHERE user_id = :user_id";
+        $result = $this->getStatement($sql, array(
+                0 => array('name' => 'user_id', 'value' => $userId, 'param' => "PARAM_INT"),
+                1 => array('name' => 'travel_id', 'value' => $this->travelId, 'param' => "PARAM_INT")
+            ));
+        
+        //2 include old pictures
+        $picturesSave = "";
+        if( ($result[0]['pictures'] != NULL) && (!empty($result[0]['pictures'])) ){
+            $picturesSave = json_decode( $result[0]['pictures'], true );
+        }
+        
+        //3 add new pictures
+        $picturesSave[ $pictures["md5"] ] = array(
+                "filename" => $pictures["filename"]
+            );
+        
+        $picturesSave = json_encode($picturesSave);
+        
+        $sql = "UPDATE travel SET pictures = :pictures" .
+                " WHERE travel_id = :travel_id AND user_id = :user_id";
+        
+        $this->getInsert($sql, array(
+            0 => array('name' => 'travel_id', 'value' =>  $this->travelId, 'param' => "PARAM_INT"),
+            1 => array('name' => 'user_id', 'value' =>  $userId, 'param' => "PARAM_INT"),
+            2 => array('name' => 'pictures', 'value' =>  $picturesSave, 'param' => "PARAM_STR")
+        ));
+        
     }
     
     /**
@@ -224,7 +266,12 @@ class travel_controller extends database{
         //Save files only, if files uploaded
         if(!empty($_FILES)){
             echo "files";
-            $file = $this->uploadPictures();
+            //upload pictures
+            $pictures = $this->uploadPictures();
+            
+            //save pictures
+            $this->setPictures($pictures);
+            
             
             //wie in DB ablegen?
                 //1 Feld mit xml, dass Pfade enthält
@@ -259,6 +306,8 @@ class travel_controller extends database{
      * @todo Create folder for every user
      * @todo write in Database the naee and pathes of the pictures
      * @todo read exif-Data
+     * @todo error handling
+     * @return array metadata of file
      */
     private function uploadPictures(){
         $user_id = Witt::getUser();
@@ -321,7 +370,9 @@ class travel_controller extends database{
             if(move_uploaded_file($_FILES['FileInput']['tmp_name'], $UploadDirectory.$md5Filename.$NewFileName )){
                 $filename = $md5Filename.$NewFileName;
                 
-                return $filename;
+                $fileArray = array("md5" => md5_file($UploadDirectory.$md5Filename.$NewFileName),
+                            "filename" => $UploadDirectory.$md5Filename.$NewFileName);
+                return $fileArray;
             }else{
                 
                 die('error uploading File!');

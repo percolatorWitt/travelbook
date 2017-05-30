@@ -72,9 +72,14 @@ class database{
         try {
             $statement->execute();
             $return = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
         } catch (PDOException $e) {
             echo _('Fehler bei der Abfrage: ') . $e->getMessage();
             echo "\nPDO::errorCode(): ", $this->db->errorCode();
+            
+            $statement->closeCursor();
             
             $return = FALSE;
         }
@@ -116,6 +121,8 @@ class database{
         }
         
         $statement->execute();
+        $statement->closeCursor();
+        
         $lastId = $this->db->lastInsertId();
         
         return $lastId;
