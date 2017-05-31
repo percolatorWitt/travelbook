@@ -4,27 +4,18 @@
 class database{
     private $db;
     
-    private $host = '';
-    private $dbname = '';
-    private $dbuser = '';
-    private $dbpw = '';
+    private $host = 'localhost';
+    private $dbname = 'test';
+    private $dbuser = 'root';
+    private $dbpw = 'mcfly1';
 
     public function __construct(){
         
-        include_once('./system/configuration.php');        
-        
-        $this->host = $config['host'];
-        $this->dbname = $config['dbname'];
-        $this->dbuser = $config['dbuser'];
-        $this->dbpw = $config['dbpw'];
-        
-        $this->setDb();
     }
     
     private function setDb(){
         try {
-            $pdo = new PDO('mysql:host=localhost;dbname=test', 'root', 'mcfly1');
-            //$pdo = new PDO('mysql:host='.$this->host.';dbname='.$this->dbname, $this->dbuser, $this->dbpw);
+            $pdo = new PDO('mysql:host='.$this->host.';dbname='.$this->dbname, $this->dbuser, $this->dbpw);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
             $this->db = $pdo;
@@ -35,6 +26,10 @@ class database{
     }
     
     public function getDb(){
+        if(!isset($this->db)){
+            $this->setDb();
+        }
+        
         return $this->db;
     }
     
@@ -46,7 +41,7 @@ class database{
      * @return integer
      */
     public function getStatement($sql, $data){
-        $this->setDb();
+        $this->getDb();
         
         $statement = $this->db->prepare($sql);
         
@@ -83,9 +78,6 @@ class database{
             
             $return = FALSE;
         }
-        
-        
-        
         
         return $return;
     }
