@@ -90,7 +90,7 @@ class database{
      * @return integer
      */
     public function getInsert($sql, $data){
-        $this->setDb();
+        $this->getDb();
         
         $statement = $this->db->prepare($sql);
         
