@@ -195,18 +195,14 @@ label{
             </p>
             <div class="clear"></div>
 
-            <!--<form method="get" action="/user/add/">-->
-
-                <div id="addlocations">
-                    <div id="basicMap"></div>
-                    <div id="addedlocations">
-                        <h3>Added locations</h3>
-                        <ul id="addedlocationslist"></ul>
-                    </div>
+            <div id="addlocations">
+                <div id="basicMap"></div>
+                <div id="addedlocations">
+                    <h3>Added locations</h3>
+                    <ul id="addedlocationslist"></ul>
                 </div>
-                <div class="clear"></div>
-
-            <!--</form>-->
+            </div>
+            <div class="clear"></div>
 
             <br/>
             <div id="searchlocation">
@@ -225,11 +221,11 @@ label{
                         <!--<label for="about">About me</label>-->
                     <input name="about" type="hidden"/>
                     <div id="editor-container">
-                    <p></p>
-                  </div>
+                        <p></p>
+                    </div>
                 </div>
                 <div class="row">
-                  <button class="btn btn-primary" type="submit">Save Text</button>
+                    <button class="btn btn-primary" type="submit">Save Text</button>
                 </div>
 
             </div>
@@ -240,9 +236,10 @@ label{
             <p>Please save your trip first.</p>
         </div>
     </div>
+    <button id="travelsave-bottom" class="btn btn-primary" type="submit">Save it.</button>
 </form>
-<button id="travelsave-bottom" class="btn btn-primary" type="submit">Save it.</button>
-<script>
+
+<script type="text/javascript">
 <!-- Initialize Quill editor -->
 var quill = new Quill('#editor-container', {
   modules: {

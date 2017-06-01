@@ -117,8 +117,8 @@
     <button id="travelsave-bottom" class="btn btn-primary" type="submit">Save it.</button>
     
 </form>
-<script>
-<!-- Initialize Quill editor -->
+<script type="text/javascript">
+//Initialize Quill editor
 var quill = new Quill('#editor-container', {
   modules: {
     toolbar: [
