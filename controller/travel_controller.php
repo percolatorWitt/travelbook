@@ -229,6 +229,10 @@ class travel_controller extends database{
         
         $picturesPrepaired = array();
         
+        if(empty($pictures)){
+            return $picturesPrepaired;
+        }
+        
         foreach($pictures as $key => $row){
             $picturesPrepaired[$key]['filename'] = ltrim($row['filename'], ".");
         }
