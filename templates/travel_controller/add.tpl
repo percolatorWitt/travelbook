@@ -172,7 +172,7 @@ label{
 
 <h1>Add Travel</h1>
 
-<form method="get" action="/travel/add">
+<form  id="addform" method="get" action="/travel/add">
     <button id="travelsave-top"class="btn btn-primary" type="submit">Save it.</button>
     <div id="accordion">
         
@@ -262,15 +262,15 @@ form.onsubmit = function() {
   //console.log("Submitted", $(form).serialize(), $(form).serializeArray());
   
   //submit
-   $.ajax({
+   /*$.ajax({
     type: "POST",
     url: "/travel/addajax/",
     data: $(form).serialize(),
     success: function(result){
-        //console.log(result);
-        window.location.href = "/travel/edit/"+result;
+        console.log(result);
+        //window.location.href = "/travel/edit/"+result;
     }
-    });
+    });*/
   
   //endsubmi
   
@@ -280,5 +280,24 @@ form.onsubmit = function() {
   //alert('Open the console to see the submit data!')
   //return false;
 };
+
+ $('#addform').submit(function() { 
+        //$(this).ajaxSubmit(options);  			
+        // always return false to prevent standard browser submit and page navigation 
+  var about = document.querySelector('input[name=about]');
+  about.value = JSON.stringify(quill.getContents());      
+
+   $.ajax({
+    type: "POST",
+    url: "/travel/addajax/",
+    data: $('#addform').serialize(),
+    success: function(result){
+        window.location.href = "/travel/edit/"+result;
+    }
+    });
+        
+        
+        return false; 
+    });
 
 </script>

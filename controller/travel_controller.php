@@ -56,7 +56,9 @@ class travel_controller extends database{
     /**
      * perform the add
      * @todo add 500-code for error during save
-     * @todo UserId einfügen!! oder wat?
+     * @todo add date
+     * @todo no formated text in description
+     * @todo fix add location
      */
     public function addajax(){
         $user_id = Witt::getUser();
@@ -73,17 +75,22 @@ class travel_controller extends database{
         
         $postdata = $this->prepareTravelPostData();
         
-        $sql = "INSERT INTO travel SET user_id = :user_id, name = :name, description = :description, locations = :locations";
+        $sql = "INSERT INTO travel SET user_id = :user_id, name = :name, description = :description, locations = :locations, startdate = :startdate"
+                . ", enddate = :enddate ";
         
         $travelId = $this->getInsert($sql, array(
                 0 => array('name' => 'user_id', 'value' =>  $user_id, 'param' => "PARAM_INT"),
-                1 => array('name' => 'name', 'value' =>  $postVar['name'], 'param' => "PARAM_STR"),
+                1 => array('name' => 'name', 'value' =>  $postdata['name'], 'param' => "PARAM_STR"),
                 2 => array('name' => 'description', 'value' =>  $postdata['description'], 'param' => "PARAM_STR"),
                 3 => array('name' => 'locations', 'value' =>  $postdata['locations'], 'param' => "PARAM_STR"),
-            
+                4 => array('name' => 'startdate', 'value' =>  $postdata['startdate'], 'param' => "PARAM_STR"),
+                5 => array('name' => 'enddate', 'value' =>  $postdata['enddate'], 'param' => "PARAM_STR"),
             ));
         
         $this->viewVariables = array('ajaxdata' => $travelId);
+        
+        //@todo redirect from server is safer
+        //header('Location: /travel/edit/'.$travelId);
     }
     
     /**
@@ -131,13 +138,11 @@ class travel_controller extends database{
             'enddate' => $this->prepareTravelDate($result[0]['enddate']),
             'pictures' => $pictures
         );
-         
-        
-       
     }
     
     
     //@todo Speichern nur, wenn Refferer Edit ist
+    /* @todo no formated text in description*/
     public function editajax($travel_id){
         $user_id = Witt::getUser();
         $postVar = $_POST;
@@ -153,7 +158,7 @@ class travel_controller extends database{
         $travelId = $this->getInsert($sql, array(
                 0 => array('name' => 'travel_id', 'value' =>  $travel_id, 'param' => "PARAM_INT"),
                 1 => array('name' => 'user_id', 'value' =>  $user_id, 'param' => "PARAM_INT"),
-                2 => array('name' => 'name', 'value' =>  $postVar['name'], 'param' => "PARAM_STR"),
+                2 => array('name' => 'name', 'value' =>  $postdata['name'], 'param' => "PARAM_STR"),
                 3 => array('name' => 'description', 'value' =>  $postdata['description'], 'param' => "PARAM_STR"),
                 4 => array('name' => 'locations', 'value' =>  $postdata['locations'], 'param' => "PARAM_STR"),
                 5 => array('name' => 'startdate', 'value' =>  $postdata['startdate'], 'param' => "PARAM_STR"),
@@ -245,10 +250,12 @@ class travel_controller extends database{
      * 
      * @return array
      */
-    private function prepareTravelPostData($user_id){
+    private function prepareTravelPostData(){
         $postVar = $_POST;
         
         $postData = array();
+        
+        $postData["name"] = $postVar["name"];
         
         /**
          * locatoins - begin
@@ -271,18 +278,19 @@ class travel_controller extends database{
          * locations - end
          */
         
+        //description text
         if(isset($postVar['about'])){
             $descTemp = json_decode($postVar['about'], TRUE);
             
             if(isset($descTemp['ops'][0]['insert'])){
-                $description = trim($descTemp['ops'][0]['insert']);
+                $postData['description'] = trim($descTemp['ops'][0]['insert']);
             }else{
                 $postData['description'] = '';
             }   
         }else{
-            $description = '';
+            $postData['description'] = '';
         }
-        
+
         //dates - yyyy-mm-dd
         $startDateTemp = preg_split('/\//', $postVar['startdate']);
         $postData['startdate'] = $startDateTemp[2].'-'.$startDateTemp[0].'-'.$startDateTemp[1];
@@ -306,7 +314,7 @@ class travel_controller extends database{
             //$postData['files'] = $file;
             
         }else{
-            echo "no Upload";
+           // echo "no Upload";
         }
         //var_dump($file);
         
