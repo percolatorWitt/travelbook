@@ -62,7 +62,8 @@ input[type="submit"]:hover{
     background-color: gainsboro;
 }
 
-/* add/edit */
+/** add/edit **/
+/* metadata */
 #divstartdate{
     margin-right: 1em;
 }
@@ -118,6 +119,9 @@ input[type="submit"]:hover{
     background-color: grey;
 }
 
+/* editor */
+
+/* photos */
 
 .clear{
     clear: both;
