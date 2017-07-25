@@ -67,8 +67,16 @@ $(function() {
     });
     
     //date
-    $( "#startdate" ).datepicker();
-    $( "#enddate" ).datepicker();
+    $( "#startdate" ).datepicker({
+        onSelect: function(selected) {
+            $("#enddate").datepicker("option","minDate", selected)
+        }
+    });
+    $( "#enddate" ).datepicker({
+        onSelect: function(selected) {
+            $("#startdate").datepicker("option","maxDate", selected)
+        }
+    });
     
     
     
