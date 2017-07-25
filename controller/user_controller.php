@@ -21,6 +21,7 @@ class user_controller extends database{
     //Seite des Nutzers, 
     //sichtbarkeit: f�r andere ebenfalls sichtbar
     //Funktionsname wird nicht angezeigt
+    //@todo informa about traveler: mount of travels, km, countries, last travel
     public function index($id){
         $sql = "SELECT * FROM users WHERE id = :id";
         $result = $this->getStatement($sql, array(0 => array('name' => 'id', 'value' => $id, 'param' => "PARAM_INT")));

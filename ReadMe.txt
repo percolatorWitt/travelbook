@@ -15,11 +15,15 @@ Infos:
         --> Grenzkoordinaten des einen Landes als Grenzkoordinaten des anderen nehmen, damit sich das nicht �berlappt
     - http://www.laenderdaten.de/laender.aspx
 ToDo:
-    - Eingabe Datum: Das Enddatum muss nach/gleich Startdatum sein bzw. umgekehrt
-    - Locations l�schbar machen in �bersicht
-    - Bei Location add die Standardorte raus
-    - Inputfelder nur so lang wie Datenfeld in DB!!!
-    - salted passwords
-    - die Reihenfolge der Reisen wird mittels verschiebend der Einträge in der Liste gemacht.
-        - Die Nummerierung der Reihenfolge wird automatisch gemacht
-        - ändert sich die Reihenfolge, wird erneut durchnummeriert und danach gespeichert
+	- Eingabe Datum: Das Enddatum muss nach/gleich Startdatum sein bzw. umgekehrt
+	- addLocation
+		- Bei Location add die Standardorte raus
+	- System
+	    - salted passwords
+	- editLocation
+	    - Nach Upload des Bildes, den Bereich neu laden. Bisher werden die hochgeladenen Bilder nur gezeigt, wenn die Seite neu geladen wird
+		- Locations l�schbar machen in �bersicht
+	- addLocation/editLocation
+		- Inputfelder nur so lang wie Datenfeld in DB!!!
+		- Konsolidierung von CSS, JavaScript
+
