@@ -158,7 +158,8 @@ input[type="submit"]:hover{
   padding-right: 15px;
 }
 .btn {
-  margin-left: 15px;
+    border-radius: 3px;
+    margin-left: 15px;
 }
 
 .change-link {
