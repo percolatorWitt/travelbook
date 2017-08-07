@@ -11,7 +11,7 @@ if (function_exists('Dwoo_Plugin_include')===false)
             <div id="mainmenu">
                 <div id="center">
                     <ul>
-                        <li><a href="/user/<?php echo $this->scope["user_id"];?>"><?php echo $this->scope["userdata"]["vorname"];?> <?php echo $this->scope["userdata"]["nachname"];?></a></li>
+                        <li><a href="/user/<?php echo $this->scope["user_id"];?>"><?php echo $this->scope["userdata"]["surname"];?> <?php echo $this->scope["userdata"]["name"];?></a></li>
                         <li id="settings"><a href="/user/settings/">Settings</a></li>
                         <li><a href="/user/travels/">Travels</a></li>
                         <li><a href="/travel/add/">add Travel</a></li>

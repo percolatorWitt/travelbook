@@ -147,7 +147,7 @@ class Witt{
     public function setLogin(){
         if(isset($_GET['login'])) {
             $email = $_POST['email'];
-            $passwort = $_POST['passwort'];
+            $password = $_POST['password'];
 
             $db = $this->getDb();
             
@@ -156,7 +156,7 @@ class Witt{
             $user = $user[0];
 
             //Überprüfung des Passworts
-            if ($user !== false && password_verify($passwort, $user['passwort'])) {
+            if ($user !== false && password_verify($password, $user['password'])) {
                 $_SESSION['userid'] = $user['id'];
                 //Login erfolgreich.
                 header('Location: /user/'.$user['id']);
@@ -211,7 +211,7 @@ class Witt{
         $user_id = $_SESSION['userid'];
         $db = $this->getDb();
         
-        $sql = "SELECT nachname, vorname, email FROM users WHERE id = :user_id limit 1";
+        $sql = "SELECT name, surname, email FROM users WHERE id = :user_id limit 1";
         
         $user = $db->getStatement($sql, array(0 => array('name' => 'user_id', 'value' => $user_id, 'param' => "PARAM_STR")));
         $user = $user[0];

@@ -62,7 +62,8 @@ input[type="submit"]:hover{
     background-color: gainsboro;
 }
 
-/** add/edit **/
+/*** controller ***/
+/** trave - add/edit **/
 /* metadata */
 #divstartdate{
     margin-right: 1em;
@@ -218,6 +219,46 @@ label{
 #travelsave-bottom:hover{
     cursor: pointer;
 }
+
+/** user - settings **/
+.hidden{
+    display: none;
+}
+
+/* settings */
+fieldset{
+    margin-bottom: 1em;
+}
+.settings{
+    flaot: left;
+    display: block;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.settings label{
+    width: 150px;
+    display: block;
+    float: left;
+}
+.settings input,
+.settings select{
+    margin-left: 50px;
+}
+.settings #validate{
+    color: #1BC115;
+    margin-left: 200px;
+}
+
+.submit{
+    background-color: white;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.notsaved{
+    border: 2px solid #000;
+}
+
 
 /* jquery-ui */
 

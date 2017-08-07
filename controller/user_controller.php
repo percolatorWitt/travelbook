@@ -45,20 +45,19 @@ class user_controller extends database{
         $this->viewVariables = array(
                 'email' => $result[0]['email'],
                 'emailmd5' => md5($result[0]['email']),
+                'nickname' => $result[0]['nickname'],
+                'surname' => $result[0]['surname'],
                 'name' => $result[0]['name'],
-                'vorname' => $result[0]['vorname'],
-                'nachname' => $result[0]['nachname'],
                 );
         }else{
             echo "FEHLER/Hack";
         }
        
-        //var_dump($_POST);
         
     }
-    
+        
     //get posts vor update
-    public function settingsajax($test){
+    public function settingsajax(){
         $user = Witt::getUser();
         $postVar = $_POST;
         
@@ -67,6 +66,7 @@ class user_controller extends database{
         //get data
         $sql = "SELECT * FROM users WHERE id = :id";
         $result = $this->getStatement($sql, array(0 => array('name' => 'id', 'value' => $user, 'param' => "PARAM_INT")));
+        
         //check if result is right
         if($result[0]['id'] == $user){
             
@@ -77,7 +77,17 @@ class user_controller extends database{
                     'vorname' => $result[0]['vorname'],
                     'nachname' => $result[0]['nachname'],
                     );
-                    
+            
+            
+            $sql = "INSERT INTO user SET name = :name, surname = :surname" . 
+                    " WHERE user_id = :user_id";
+        
+            $travelId = $this->getStatement($sql, array(
+                0 => array('name' => 'name', 'value' =>  $postdata['name'], 'param' => "PARAM_STR"),
+                1 => array('name' => 'surname', 'value' =>  $postdata['surname'], 'param' => "PARAM_STR"),
+                2 => array('name' => 'user_id', 'value' =>  $user_id, 'param' => "PARAM_INT"),
+            ));
+        
              
         }else{
             echo "FEHLER/Hack"; exit;
@@ -93,6 +103,9 @@ class user_controller extends database{
         $this->viewVariables = array( 'ajaxdata' => json_encode($ajaxdata) );
         
     }
+    
+    
+    
     
     //@todo andere HTTP-Methode verwenden, diese verwendet Standardtimeout
     private function getGravatar($email){

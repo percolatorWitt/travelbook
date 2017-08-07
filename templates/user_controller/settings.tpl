@@ -1,47 +1,6 @@
 <!-- grundsaetzliches -->
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 
-<style>
-    /* Hilfsklassen */
-    .hidden{
-        display: none;
-    }
-    
-    /* settings */
-    fieldset{
-        margin-bottom: 1em;
-    }
-    .settings{
-        flaot: left;
-        display: block;
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-    .settings label{
-        width: 150px;
-        display: block;
-        float: left;
-    }
-    .settings input,
-    .settings select{
-        margin-left: 50px;
-    }
-    .settings #validate{
-        color: #1BC115;
-        margin-left: 200px;
-    }
-    
-    .submit{
-        background-color: white;
-        font-weight: bold;
-        padding: 5px;
-    }
-    
-    /* veraenderliche styles */
-    .notsaved{
-        border: 2px solid #000;
-    }
-</style>
 <script type="text/javascript">
     function setGravatar(evt) {
         //aktiv Daten setzen
@@ -60,7 +19,7 @@
             success: function(response){
                 var jsonObj = JSON.parse(response);
 
-                console.log(jsonObj);
+                //console.log(jsonObj);
                 //set values
                 $("#pseudonym").val(jsonObj.gravatarData.displayName);
                 $("#displayname").val("nickname");
@@ -173,11 +132,11 @@ $(function() {
         </span>
         <span class="settings">
             <label labelfor="vorname">first name</label>
-            <input id="vorname" name="vorname" type="input" value="{$vorname}" required/>
+            <input id="vorname" name="surname" type="input" value="{$surname}" required/>
         </span>
         <span class="settings">
             <label labelfor="nachname">surname</label>
-            <input id="nachname" name="nachname" type="input" value="{$nachname}" required/>
+            <input id="nachname" name="name" type="input" value="{$name}" required/>
         </span>
         <span class="settings">
             <label labelfor="displayname">select display name</label>

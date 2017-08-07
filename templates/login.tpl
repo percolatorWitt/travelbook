@@ -45,7 +45,7 @@
             </span>
             <span class="form">
                 <label for="password">Dein Passwort</label>
-                <input id="password" type="password" size="40"  maxlength="250" name="passwort"/>
+                <input id="password" type="password" size="40"  maxlength="250" name="password"/>
             </span>
             <span class="form">
                 {$errorMessage}
