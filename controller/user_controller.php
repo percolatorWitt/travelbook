@@ -35,20 +35,21 @@ class user_controller extends database{
     //Sichtbarkeit: nur f�r den Nutzer
     //Passwort nur aendern, wenn neues eingegeben wurde und validate gleich ist
     public function settings(){
-        $user = Witt::getUser();
+        $userId = Witt::getUserId();
 
         $sql = "SELECT * FROM users WHERE id = :id";
-        $result = $this->getStatement($sql, array(0 => array('name' => 'id', 'value' => $user, 'param' => "PARAM_INT")));
+        $result = $this->getStatement($sql, array(0 => array('name' => 'id', 'value' => $userId, 'param' => "PARAM_INT")));
         //check if result is right
-        if($result[0]['id'] == $user){
+        if($result[0]['id'] == $userId){
             
-        $this->viewVariables = array(
+            $this->viewVariables = array(
                 'email' => $result[0]['email'],
                 'emailmd5' => md5($result[0]['email']),
                 'nickname' => $result[0]['nickname'],
+                'first_name' => $result[0]['first_name'],
                 'surname' => $result[0]['surname'],
-                'name' => $result[0]['name'],
-                );
+                'displayname' => $result[0]['displayname']
+            );
         }else{
             echo "FEHLER/Hack";
         }
@@ -58,14 +59,14 @@ class user_controller extends database{
         
     //get posts vor update
     public function settingsajax(){
-        $user = Witt::getUser();
+        $userId = Witt::getUserId();
         $postVar = $_POST;
         
         $userSettings = array();
         
         //get data
         $sql = "SELECT * FROM users WHERE id = :id";
-        $result = $this->getStatement($sql, array(0 => array('name' => 'id', 'value' => $user, 'param' => "PARAM_INT")));
+        $result = $this->getStatement($sql, array(0 => array('name' => 'id', 'value' => $userId, 'param' => "PARAM_INT")));
         
         //check if result is right
         if($result[0]['id'] == $user){
@@ -73,9 +74,10 @@ class user_controller extends database{
             $userSettings = array(
                     'email' => $result[0]['email'],
                     'emailmd5' => md5($result[0]['email']),
-                    'name' => $result[0]['name'],
-                    'vorname' => $result[0]['vorname'],
-                    'nachname' => $result[0]['nachname'],
+                    'nickname' => $result[0]['nickname'],
+                    'first_name' => $result[0]['first_name'],
+                    'surname' => $result[0]['surname'],
+                    'displayname' => $result[0]['displayname']
                     );
             
             
@@ -85,7 +87,7 @@ class user_controller extends database{
             $travelId = $this->getStatement($sql, array(
                 0 => array('name' => 'name', 'value' =>  $postdata['name'], 'param' => "PARAM_STR"),
                 1 => array('name' => 'surname', 'value' =>  $postdata['surname'], 'param' => "PARAM_STR"),
-                2 => array('name' => 'user_id', 'value' =>  $user_id, 'param' => "PARAM_INT"),
+                2 => array('name' => 'user_id', 'value' =>  $userId, 'param' => "PARAM_INT"),
             ));
         
              
@@ -134,17 +136,17 @@ class user_controller extends database{
     //show all travels of user
     //@todo limit (paging)
     public function travels(){
-        $user = Witt::getUser();
+        $userId = Witt::getUserId();
 
         $sql = "SELECT * FROM travel WHERE user_id = :user_id";
         //provozierte Fehler --> abfangen
             //$sql = "SELECT * FROM travels WHERE user_id = :user_id";
-        $result = $this->getStatement($sql, array(0 => array('name' => 'user_id', 'value' => $user, 'param' => "PARAM_INT")));
+        $result = $this->getStatement($sql, array(0 => array('name' => 'user_id', 'value' => $userId, 'param' => "PARAM_INT")));
         $travels = array();
          foreach($result as $row){
             $travels[$row['travel_id']] = array(
                 'travel_id' => $row['travel_id'],
-                'user_id' => $row['travel_id'],
+                'user_id' => $userId,
                 'name' => $row['name'],
                 'description' => $row['description'],
                 'locations' => $row['location'],

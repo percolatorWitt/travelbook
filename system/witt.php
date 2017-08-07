@@ -211,7 +211,7 @@ class Witt{
         $user_id = $_SESSION['userid'];
         $db = $this->getDb();
         
-        $sql = "SELECT name, surname, email FROM users WHERE id = :user_id limit 1";
+        $sql = "SELECT first_name, surname, email FROM users WHERE id = :user_id limit 1";
         
         $user = $db->getStatement($sql, array(0 => array('name' => 'user_id', 'value' => $user_id, 'param' => "PARAM_STR")));
         $user = $user[0];
@@ -220,7 +220,7 @@ class Witt{
     }
 
 
-    static function getUser(){
+    static function getUserId(){
         if(isset($_SESSION['userid'])){        
             return $_SESSION['userid'];
         }

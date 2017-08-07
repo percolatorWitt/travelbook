@@ -57,8 +57,8 @@
         //get data
         var formData = {
             'nickname'  : $('input[name=nickname]').val(),
-            'vorname'   : $('input[name=vorname]').val(),
-            'nachname'  : $('input[name=nachname]').val(),
+            'surname'   : $('input[name=vorname]').val(),
+            'name'  : $('input[name=nachname]').val(),
             'displayname': $("#displayname").val(),
             'oldpassword'  : $('input[name=oldpassword]').val(),
             'newpassword'  : $('input[name=newpassword]').val(),
@@ -127,23 +127,23 @@ $(function() {
 
     <fieldset>
         <span class="settings">
-            <label labelfor="user" title="selbst eingeben oder von Gravatar">nickname*</label>
-            <input id="pseudonym" name="nickname" type="input" required="yes"/>
+            <label labelfor="nickname" title="selbst eingeben oder von Gravatar">nickname*</label>
+            <input id="nickname" name="nickname" type="input" required="yes"/>
         </span>
         <span class="settings">
-            <label labelfor="vorname">first name</label>
-            <input id="vorname" name="surname" type="input" value="{$surname}" required/>
+            <label labelfor="first_name">first name</label>
+            <input id="vorname" name="first_name" type="input" value="{$first_name}" required/>
         </span>
         <span class="settings">
-            <label labelfor="nachname">surname</label>
-            <input id="nachname" name="name" type="input" value="{$name}" required/>
+            <label labelfor="surname">surname</label>
+            <input id="nachname" name="surname" type="input" value="{$surname}" required/>
         </span>
         <span class="settings">
             <label labelfor="displayname">select display name</label>
             <select id="displayname">
                 <option value="firstname.surname" selected/>first name surname</option>
                 <option value="nickname"/>nickname</option>    
-                <option value="firstname"/>first name</option>
+                <option value="first_name"/>first name</option>
                 <option value="surname"/>surname</option>
             </select>
             <span class="hint"></span>
