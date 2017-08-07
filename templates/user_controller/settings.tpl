@@ -128,7 +128,7 @@ $(function() {
     <fieldset>
         <span class="settings">
             <label labelfor="user" title="selbst eingeben oder von Gravatar">nickname*</label>
-            <input id="pseudonym" name="nickname" type="input"/>
+            <input id="pseudonym" name="nickname" type="input" required="yes"/>
         </span>
         <span class="settings">
             <label labelfor="vorname">first name</label>
