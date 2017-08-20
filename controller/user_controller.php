@@ -37,8 +37,8 @@ class user_controller extends database{
     public function settings(){
         $userId = Witt::getUserId();
 
-        $sql = "SELECT * FROM users WHERE id = :id";
-        $result = $this->getStatement($sql, array(0 => array('name' => 'id', 'value' => $userId, 'param' => "PARAM_INT")));
+        $sql = "SELECT * FROM users WHERE user_id = :user_id";
+        $result = $this->getStatement($sql, array(0 => array('name' => 'user_id', 'value' => $userId, 'param' => "PARAM_INT")));
         
         $this->viewVariables = array(
                 'email' => $result[0]['email'],
@@ -70,8 +70,8 @@ class user_controller extends database{
         $userSettings = array();
         
         //get data
-        $sql = "SELECT * FROM users WHERE user_id = :id";
-        $result = $this->getStatement($sql, array(0 => array('name' => 'id', 'value' => $userId, 'param' => "PARAM_INT")));
+        $sql = "SELECT * FROM users WHERE user_id = :user_id";
+        $result = $this->getStatement($sql, array(0 => array('name' => 'user_id', 'value' => $userId, 'param' => "PARAM_INT")));
         
         //check if result is right
         if($result[0]['user_id'] == $userId){
