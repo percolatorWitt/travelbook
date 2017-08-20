@@ -39,20 +39,25 @@ class user_controller extends database{
 
         $sql = "SELECT * FROM users WHERE id = :id";
         $result = $this->getStatement($sql, array(0 => array('name' => 'id', 'value' => $userId, 'param' => "PARAM_INT")));
-        //check if result is right
-        if($result[0]['id'] == $userId){
-            
-            $this->viewVariables = array(
+        
+        $this->viewVariables = array(
                 'email' => $result[0]['email'],
                 'emailmd5' => md5($result[0]['email']),
                 'nickname' => $result[0]['nickname'],
                 'first_name' => $result[0]['first_name'],
                 'surname' => $result[0]['surname'],
                 'displayname' => $result[0]['displayname']
-            );
+        );
+        
+        //check if result is right
+        
+        /*if($result[0]['id'] == $userId){
+            
+           $this->setUser($result);
+           
         }else{
             echo "FEHLER/Hack";
-        }
+        }*/
        
         
     }
@@ -65,31 +70,14 @@ class user_controller extends database{
         $userSettings = array();
         
         //get data
-        $sql = "SELECT * FROM users WHERE id = :id";
+        $sql = "SELECT * FROM users WHERE user_id = :id";
         $result = $this->getStatement($sql, array(0 => array('name' => 'id', 'value' => $userId, 'param' => "PARAM_INT")));
         
         //check if result is right
-        if($result[0]['id'] == $user){
-            
-            $userSettings = array(
-                    'email' => $result[0]['email'],
-                    'emailmd5' => md5($result[0]['email']),
-                    'nickname' => $result[0]['nickname'],
-                    'first_name' => $result[0]['first_name'],
-                    'surname' => $result[0]['surname'],
-                    'displayname' => $result[0]['displayname']
-                    );
-            
-            
-            $sql = "INSERT INTO user SET name = :name, surname = :surname" . 
-                    " WHERE user_id = :user_id";
-        
-            $travelId = $this->getStatement($sql, array(
-                0 => array('name' => 'name', 'value' =>  $postdata['name'], 'param' => "PARAM_STR"),
-                1 => array('name' => 'surname', 'value' =>  $postdata['surname'], 'param' => "PARAM_STR"),
-                2 => array('name' => 'user_id', 'value' =>  $userId, 'param' => "PARAM_INT"),
-            ));
-        
+        if($result[0]['user_id'] == $userId){
+            //echo "<pre>";var_dump($postVar);exit;
+            $this->setUser($postVar, $userId);
+        exit;
              
         }else{
             echo "FEHLER/Hack"; exit;
@@ -106,7 +94,17 @@ class user_controller extends database{
         
     }
     
-    
+    private function setUser($data, $userId){
+            
+        $sql = "UPDATE users SET first_name = :first_name, surname = :surname" . 
+                " WHERE user_id = :user_id";
+
+        $status = $this->getStatement($sql, array(
+            0 => array('name' => 'first_name', 'value' =>  $data['first_name'], 'param' => "PARAM_STR"),
+            1 => array('name' => 'surname', 'value' =>  $data['surname'], 'param' => "PARAM_STR"),
+            2 => array('name' => 'user_id', 'value' =>  $userId, 'param' => "PARAM_INT"),
+        ));
+    }
     
     
     //@todo andere HTTP-Methode verwenden, diese verwendet Standardtimeout

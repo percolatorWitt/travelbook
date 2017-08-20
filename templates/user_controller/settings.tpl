@@ -55,27 +55,19 @@
         } 
         
         //get data
-        var formData = {
-            'nickname'  : $('input[name=nickname]').val(),
-            'surname'   : $('input[name=vorname]').val(),
-            'name'  : $('input[name=nachname]').val(),
-            'displayname': $("#displayname").val(),
-            'oldpassword'  : $('input[name=oldpassword]').val(),
-            'newpassword'  : $('input[name=newpassword]').val(),
-            'validatepassword'  : $('input[name=validatepassword]').val(),
-            
-        };
-        console.log(formData);
-        /*$.ajax({
+        
+        var form = $("form").serialize();
+        
+        $.ajax({
             type: "POST",
             url: "/user/settingsajax",
-            data: { setgrvatar : 1},
+            data: form,
             success: function(response){
                 var jsonObj = JSON.parse(response);
 
                 console.log(jsonObj);
                 //set values
-                $("#pseudonym").val(jsonObj.gravatarData.displayName);
+        /*        $("#pseudonym").val(jsonObj.gravatarData.displayName);
                 $("#displayname").val("nickname");
         
                 //mark changes for user
@@ -85,13 +77,13 @@
         
                 //saved data are not new
                 $("#formsettings input").removeClass("notsaved");
-                $("#formsettings select").removeClass("notsaved");
+                $("#formsettings select").removeClass("notsaved");*/
             },
             dataType: 'html'
             
-        });*/
+        });
         
-        return true;
+        return false;
     };
 
 $(function() {
