@@ -72,12 +72,10 @@ class user_controller extends database{
         //get data
         $sql = "SELECT * FROM users WHERE user_id = :user_id";
         $result = $this->getStatement($sql, array(0 => array('name' => 'user_id', 'value' => $userId, 'param' => "PARAM_INT")));
-        var_dump($result);
+        
         //check if result is right
         if($result[0]['user_id'] == $userId){
-            echo "<pre>";var_dump($postVar);
             $this->setUser($postVar, $userId);
-        
              
         }else{
             echo "FEHLER/Hack"; exit;
