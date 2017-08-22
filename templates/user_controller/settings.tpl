@@ -29,7 +29,7 @@
         </span>
         <span class="settings">
             <label labelfor="displayname">select display name</label>
-            <select id="displayname">
+            <select id="displayname" disabled="true">
                 <option value="firstname.surname" selected/>first name surname</option>
                 <option value="nickname"/>nickname</option>    
                 <option value="first_name"/>first name</option>
@@ -69,8 +69,8 @@
     <fieldset>
         <span class="settings">
             <label labelfor="avatar" title="Bild hochladen oder von Gravatar">avatar*</label>
-            <input id="filetavatar" name="avatar" type="file" value="{$avatar}" />
-            <input id="inputavatar" name="avatar" type="text" value="{$avatar}" />
+            <input id="filetavatar" name="avatar" type="file" value="{$avatar}" disabled="true"/>
+            <input id="inputavatar" name="avatar" type="text" value="{$avatar}" disabled="true"/>
             <output id="outputavatar"></output>
         </span>
     </fieldset>
