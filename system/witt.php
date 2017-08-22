@@ -143,7 +143,8 @@ class Witt{
         return TRUE;
     }
     
-    //todo -->UserController???
+    //@todo -->UserController???
+    //@todo set cost for passwor, remind: update old password
     public function setLogin(){
         if(isset($_GET['login'])) {
             $email = $_POST['email'];

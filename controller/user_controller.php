@@ -87,6 +87,10 @@ class user_controller extends database{
                 $ajaxdata['gravatarData'] = $this->getGravatar($userSettings['email']);
             }
         }
+        //@todo set error message
+        if(isset($postVar['oldpassword']) && isset($postVar['newpassword'])){
+            //$this->setPassword($postVar['oldpassword'], $postVar['newpassword']);
+        }
         
         $this->viewVariables = array( 'ajaxdata' => json_encode($ajaxdata) );
         
@@ -106,6 +110,20 @@ class user_controller extends database{
         ));
     }
     
+    //@todo save date of password set
+    private function setPassword($oldpassword, $newpassword){
+        $passwort_hash = password_hash($passwort, PASSWORD_DEFAULT);
+		
+        $sql = "UPDATE users SET password = :password WHERE email = :email");
+        $result = $statement->execute(array('email' => $email, 'passwort' => $passwort_hash));
+
+        if($result) {		
+                echo 'Du wurdest erfolgreich registriert. <a href="login.php">Zum Login</a>';
+                $showFormular = false;
+        } else {
+                echo 'Beim Abspeichern ist leider ein Fehler aufgetreten<br>';
+        }
+    }
     
     //@todo andere HTTP-Methode verwenden, diese verwendet Standardtimeout
     private function getGravatar($email){
