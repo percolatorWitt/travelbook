@@ -120,15 +120,15 @@ $(function() {
     <fieldset>
         <span class="settings">
             <label labelfor="nickname" title="selbst eingeben oder von Gravatar">nickname*</label>
-            <input id="nickname" name="nickname" type="input" required="yes"/>
+            <input id="nickname" name="nickname" type="input" value="{$nickname}" required="yes"/>
         </span>
         <span class="settings">
             <label labelfor="first_name">first name</label>
-            <input id="vorname" name="first_name" type="input" value="{$first_name}" required/>
+            <input id="first_name" name="first_name" type="input" value="{$first_name}" required/>
         </span>
         <span class="settings">
             <label labelfor="surname">surname</label>
-            <input id="nachname" name="surname" type="input" value="{$surname}" required/>
+            <input id="surname" name="surname" type="input" value="{$surname}" required/>
         </span>
         <span class="settings">
             <label labelfor="displayname">select display name</label>

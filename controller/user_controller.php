@@ -72,12 +72,12 @@ class user_controller extends database{
         //get data
         $sql = "SELECT * FROM users WHERE user_id = :user_id";
         $result = $this->getStatement($sql, array(0 => array('name' => 'user_id', 'value' => $userId, 'param' => "PARAM_INT")));
-        
+        var_dump($result);
         //check if result is right
         if($result[0]['user_id'] == $userId){
-            //echo "<pre>";var_dump($postVar);exit;
+            echo "<pre>";var_dump($postVar);
             $this->setUser($postVar, $userId);
-        exit;
+        
              
         }else{
             echo "FEHLER/Hack"; exit;
@@ -96,13 +96,15 @@ class user_controller extends database{
     
     private function setUser($data, $userId){
             
-        $sql = "UPDATE users SET first_name = :first_name, surname = :surname" . 
+        $sql = "UPDATE users SET first_name = :first_name, surname = :surname, " . 
+                "nickname = :nickname ".
                 " WHERE user_id = :user_id";
 
         $status = $this->getStatement($sql, array(
             0 => array('name' => 'first_name', 'value' =>  $data['first_name'], 'param' => "PARAM_STR"),
             1 => array('name' => 'surname', 'value' =>  $data['surname'], 'param' => "PARAM_STR"),
-            2 => array('name' => 'user_id', 'value' =>  $userId, 'param' => "PARAM_INT"),
+            2 => array('name' => 'nickname', 'value' =>  $data['nickname'], 'param' => "PARAM_STR"),
+            3 => array('name' => 'user_id', 'value' =>  $userId, 'param' => "PARAM_INT")
         ));
     }
     
