@@ -35,7 +35,7 @@
                 <option value="first_name"/>first name</option>
                 <option value="surname"/>surname</option>
             </select>
-            <span class="hint"></span>
+            <span class="hint hidden"></span>
         </span>
     </fieldset>
 
@@ -52,7 +52,7 @@
             <label labelfor="validatepassword">validate password</label>
             <input id="validatepassword" name="validatepassword" type="password"/>
         </span>
-        <span class="hint"></span>
+        <span class="hint hidden"></span>
     </fieldset>
     
     <fieldset>

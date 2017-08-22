@@ -47,6 +47,17 @@ input[type="submit"]:hover{
     cursor: pointer;
 }
 
+.hint{
+    border: 2px solid #ff7f00;
+    display: inline-block;
+    margin-top: 1em;
+    padding: 0.1em;
+}
+
+.hidden{
+    display: none;
+}
+
 /* content */
 #travellist{
     padding-left: 1em;
@@ -221,9 +232,7 @@ label{
 }
 
 /** user - settings **/
-.hidden{
-    display: none;
-}
+
 
 /* settings */
 fieldset{
