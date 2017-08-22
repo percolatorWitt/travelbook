@@ -19,7 +19,7 @@ if(isset($_GET['register'])) {
 	$passwort2 = $_POST['passwort2'];
   
 	if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		echo 'Bitte eine gültige E-Mail-Adresse eingeben<br>';
+		echo 'Bitte eine gï¿½ltige E-Mail-Adresse eingeben<br>';
 		$error = true;
 	} 	
 	if(strlen($passwort) == 0) {
@@ -27,11 +27,11 @@ if(isset($_GET['register'])) {
 		$error = true;
 	}
 	if($passwort != $passwort2) {
-		echo 'Die Passwörter müssen übereinstimmen<br>';
+		echo 'Die Passwï¿½rter mï¿½ssen ï¿½bereinstimmen<br>';
 		$error = true;
 	}
 	
-	//Überprüfe, dass die E-Mail-Adresse noch nicht registriert wurde
+	//ï¿½berprï¿½fe, dass die E-Mail-Adresse noch nicht registriert wurde
 	if(!$error) { 
 		$statement = $pdo->prepare("SELECT * FROM users WHERE email = :email");
 		$result = $statement->execute(array('email' => $email));
@@ -43,8 +43,10 @@ if(isset($_GET['register'])) {
 		}	
 	}
 	
-	//Keine Fehler, wir können den Nutzer registrieren
-	if(!$error) {	
+	//Keine Fehler, wir kï¿½nnen den Nutzer registrieren
+	if(!$error) {
+                //@todo better password hash
+                //@todo check lengh of password, longer is stronger
 		$passwort_hash = password_hash($passwort, PASSWORD_DEFAULT);
 		
 		$statement = $pdo->prepare("INSERT INTO users (email, passwort) VALUES (:email, :passwort)");
