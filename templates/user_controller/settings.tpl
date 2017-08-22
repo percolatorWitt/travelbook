@@ -2,7 +2,7 @@
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 
 <!-- eigene Skripte -->
-<script type="text/javascript" src="/public/js/settings.js"></script>
+<script type="text/javascript" src="/public/js/user/settings.js"></script>
 
 <h1>Settings</h1>
 
