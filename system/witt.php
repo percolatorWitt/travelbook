@@ -158,9 +158,9 @@ class Witt{
 
             //Überprüfung des Passworts
             if ($user !== false && password_verify($password, $user['password'])) {
-                $_SESSION['userid'] = $user['id'];
+                $_SESSION['userid'] = $user['user_id'];
                 //Login erfolgreich.
-                header('Location: /user/'.$user['id']);
+                header('Location: /user/'.$user['user_id']);
             } else {
                 $errorMessage = "E-Mail oder Passwort war ungültig";
                 $this->dwooData->assign('errorMessage', $errorMessage);

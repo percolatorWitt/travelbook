@@ -22,9 +22,9 @@ class user_controller extends database{
     //sichtbarkeit: f�r andere ebenfalls sichtbar
     //Funktionsname wird nicht angezeigt
     //@todo informa about traveler: mount of travels, km, countries, last travel
-    public function index($id){
-        $sql = "SELECT * FROM users WHERE id = :id";
-        $result = $this->getStatement($sql, array(0 => array('name' => 'id', 'value' => $id, 'param' => "PARAM_INT")));
+    public function index($user_id){
+        $sql = "SELECT * FROM users WHERE user_id = :user_id";
+        $result = $this->getStatement($sql, array(0 => array('name' => 'user_id', 'value' => $user_id, 'param' => "PARAM_INT")));
         //var_dump($result);
         
         $this->viewVariables = array('bar' => 'tset');
@@ -114,14 +114,14 @@ class user_controller extends database{
     private function setPassword($oldpassword, $newpassword){
         $passwort_hash = password_hash($passwort, PASSWORD_DEFAULT);
 		
-        $sql = "UPDATE users SET password = :password WHERE email = :email");
+        $sql = "UPDATE users SET password = :password WHERE email = :email";
         $result = $statement->execute(array('email' => $email, 'passwort' => $passwort_hash));
 
         if($result) {		
-                echo 'Du wurdest erfolgreich registriert. <a href="login.php">Zum Login</a>';
+            echo 'Du wurdest erfolgreich registriert. <a href="login.php">Zum Login</a>';
                 $showFormular = false;
         } else {
-                echo 'Beim Abspeichern ist leider ein Fehler aufgetreten<br>';
+            echo 'Beim Abspeichern ist leider ein Fehler aufgetreten<br>';
         }
     }
     

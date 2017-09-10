@@ -25,10 +25,10 @@ class travel_controller extends database{
         #$this->viewVariables = array('bar' => 'tset', 'template' => 'test.tpl');
     }
     
-    public function user($id){
+    public function user($user_id){
         //Text zur Reise, allgemeine Bilder zur Reise
         $sql = "SELECT * FROM travel WHERE user_id = :id";
-        $result = $this->getStatement($sql, array(0 => array('name' => 'id', 'value' => $id, 'param' => "PARAM_INT")));
+        $result = $this->getStatement($sql, array(0 => array('name' => 'id', 'value' => $user_id, 'param' => "PARAM_INT")));
         
         $travels = array();
         
