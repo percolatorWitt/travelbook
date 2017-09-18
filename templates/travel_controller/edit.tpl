@@ -60,7 +60,7 @@
                         {loop $locations}
                         <li id="place_{$id}" class="addlocationsEntry ui-sortable-handle">
                             <span>{$text}</span>
-                            <input name="places[place_id{$id}]" value="[{ &quot;lat&quot;: &quot;{$lat}&quot;, &quot;lon&quot;: &quot;{$lon}&quot;, &quot;text&quot;: &quot;Berlin, Deutschland&quot; }]" type="hidden">
+                            <input name="places[{$id}]" value="[{ &quot;lat&quot;: &quot;{$lat}&quot;, &quot;lon&quot;: &quot;{$lon}&quot;, &quot;text&quot;: &quot;Berlin, Deutschland&quot; }]" type="hidden">
                             <span id="{$id}" class="delete" title="delete" onclick="remove('place_{$id}');"></span>
                         </li>
                         {/loop}
