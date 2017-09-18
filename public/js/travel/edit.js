@@ -115,7 +115,7 @@ $(function() {
 function adressSearch(){
 
 
-    jQuery('#suche').bind('keypress', function(e) {
+    jQuery('#suche').bind('keydown  onpaste', function(e) {
 
         if( e.keyCode == 13){    
             //var value = $("#suche").val();
