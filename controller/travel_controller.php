@@ -61,7 +61,7 @@ class travel_controller extends database{
      * @todo fix add location
      */
     public function addajax(){
-        $user_id = Witt::getUser();
+        $user_id = Witt::getUserId();
         
         //man f�gt Datum, von bis hinzu
         //gibt dem Urlaub einen Namen
@@ -102,7 +102,7 @@ class travel_controller extends database{
         //prüfen ob Eintrag existiert
         //prüfen ob user-id Besitzer des Eintrages ist
         
-        $user_id = Witt::getUser();
+        $user_id = Witt::getUserId();
 
         $sql = "SELECT * FROM travel WHERE user_id = :user_id and travel_id = :travel_id LIMIT 1";
         //provozierte Fehler --> abfangen
@@ -144,7 +144,7 @@ class travel_controller extends database{
     //@todo Speichern nur, wenn Refferer Edit ist
     /* @todo no formated text in description*/
     public function editajax($travel_id){
-        $user_id = Witt::getUser();
+        $user_id = Witt::getUserId();
         $postVar = $_POST;
         
         $this->travelId = $travel_id;
@@ -184,7 +184,7 @@ class travel_controller extends database{
      * @param type $pictures
      */
     private function setPictures($pictures){
-        $userId = Witt::getUser();
+        $userId = Witt::getUserId();
         
         //1 Bilddaten holen
         $sql = "SELECT * FROM travel WHERE user_id = :user_id and travel_id = :travel_id LIMIT 1";
@@ -220,7 +220,7 @@ class travel_controller extends database{
     }
     
     private function getPictures($travelId){
-         $userId = Witt::getUser();
+         $userId = Witt::getUserId();
         
         //1 Bilddaten holen
         $sql = "SELECT user_id, travel_id, pictures FROM travel WHERE user_id = :user_id and travel_id = :travel_id LIMIT 1";
@@ -345,7 +345,7 @@ class travel_controller extends database{
      * @return array metadata of file
      */
     private function uploadPictures(){
-        $user_id = Witt::getUser();
+        $user_id = Witt::getUserId();
         
         if(isset($_FILES["FileInput"]) &&  
                     ($_FILES["FileInput"]["error"] == UPLOAD_ERR_OK || $_FILES["FileInput"]["error"] == 0)){

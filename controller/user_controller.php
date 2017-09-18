@@ -87,9 +87,13 @@ class user_controller extends database{
                 $ajaxdata['gravatarData'] = $this->getGravatar($userSettings['email']);
             }
         }
+        
+        //set password
         //@todo set error message
         if(isset($postVar['oldpassword']) && isset($postVar['newpassword'])){
-            //$this->setPassword($postVar['oldpassword'], $postVar['newpassword']);
+            $passwordSaveStatus = $this->setPassword($postVar['oldpassword'], $postVar['newpassword']);
+            
+            $ajaxdata['$passwordSaveStatus'] = $passwordSaveStatus;
         }
         
         $this->viewVariables = array( 'ajaxdata' => json_encode($ajaxdata) );
@@ -112,17 +116,20 @@ class user_controller extends database{
     
     //@todo save date of password set
     private function setPassword($oldpassword, $newpassword){
-        $passwort_hash = password_hash($passwort, PASSWORD_DEFAULT);
-		
-        $sql = "UPDATE users SET password = :password WHERE email = :email";
-        $result = $statement->execute(array('email' => $email, 'passwort' => $passwort_hash));
+        $passwort_hash = password_hash($newpassword, PASSWORD_DEFAULT);
+        $userId = Witt::getUserId();
 
-        if($result) {		
-            echo 'Du wurdest erfolgreich registriert. <a href="login.php">Zum Login</a>';
-                $showFormular = false;
-        } else {
-            echo 'Beim Abspeichern ist leider ein Fehler aufgetreten<br>';
+        $sql = "UPDATE users SET password = :password WHERE user_id = :user_id";
+        echo "<pre>";
+        echo $passwort_hash;
+        echo $userId;exit;
+        $result = $statement->execute(array('user_id' => $userId, 'password' => $passwort_hash));
+
+        if(!$result) {		
+            return FALSE;
         }
+        
+        return TRUE;
     }
     
     //@todo andere HTTP-Methode verwenden, diese verwendet Standardtimeout

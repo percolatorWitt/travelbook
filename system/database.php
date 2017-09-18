@@ -73,7 +73,8 @@ class database{
         } catch (PDOException $e) {
             echo _('Fehler bei der Abfrage: ') . $e->getMessage();
             echo "\nPDO::errorCode(): ", $this->db->errorCode();
-            
+            echo $statement;
+            echo $sql;
             $statement->closeCursor();
             
             $return = FALSE;
