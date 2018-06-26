@@ -4,13 +4,27 @@
 class database{
     private $db;
     
-    private $host = 'localhost';
-    private $dbname = 'test';
-    private $dbuser = 'root';
-    private $dbpw = 'mcfly1';
+    private $host = '';
+    private $dbname = '';
+    private $dbuser = '';
+    private $dbpw = '';
 
     public function __construct(){
+        $database = include('system/configuration.php');
         
+        if(!is_array($database)){
+            echo "no Configuration found3.";
+            exit;
+        }
+        if(empty($database['database'])){
+            echo "no Configuration for database found.";
+            exit;
+        }
+        
+        $this->host = $database['database']['host'];
+        $this->dbname = $database['database']['dbname'];
+        $this->dbuser = $database['database']['dbuser'];
+        $this->dbpw = $database['database']['dbpw'];
     }
     
     private function setDb(){
