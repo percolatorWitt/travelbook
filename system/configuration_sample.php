@@ -1,9 +1,10 @@
 <?php
-/* database configuration */
-
-$config = array(
-    'host' => '',
-    'dbname' => '',
-    'dbuser' => '',
-    'dbpw' => '');
+return [
+    'database' => [
+        'host' => 'localhost',
+        'dbname' => '',
+        'dbuser' => 'root',
+        'dbpw' => ''
+    ]
+];
 ?>

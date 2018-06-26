@@ -1,4 +1,4 @@
-configuration.php
+system/configuration.php
 uploads/*
 system/Dwoo-1.2.0/lib/compiled/templates/*
 test
