@@ -1,6 +1,16 @@
 <?php 
 session_start();
-$pdo = new PDO('mysql:host=localhost;dbname=test', 'root', 'mcfly1');
+$database = include('system/configuration.php');
+if(!is_array($database)){
+    echo "no Configuration found3.";
+    exit;
+}
+if(empty($database['database'])){
+    echo "no Configuration for database found.";
+    exit;
+}
+$pdo = new PDO('mysql:host='.$database['database']['host'].';dbname='.$database['database']['dbname'], 
+        $database['database']['dbuser'], $database['database']['dbpw']);
 ?>
 <!DOCTYPE html> 
 <html> 
