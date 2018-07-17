@@ -182,7 +182,10 @@ class Witt{
 
         $data = new Dwoo_Data();
         // Fill it with some data
-        $data->assign('user_id', $_SESSION['userid']);
+        
+        if( $this->getUserId() ){
+            $data->assign('user_id', $_SESSION['userid']);
+        }
         $data->assign('bar', 'BAZ');
         
         $this->dwooData = $data;
